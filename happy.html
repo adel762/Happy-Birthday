@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Nour</title>
+  
+  <!-- استدعاء خط Cairo للغة العربية -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-1: #fff4f8;
+      --bg-2: #f3eaff;
+      --bg-3: #ffeae9;
+      --pink: #ff4f8e;
+      --pink-deep: #b7135d;
+      --purple: #8d5ef6;
+      --purple-soft: #d7c3ff;
+      --text: #4d2d39;
+      --muted: #725d65;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Cairo', Georgia, 'Times New Roman', serif;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      background-size: 200% 200%;
+      animation: backgroundShift 8s ease infinite;
+      color: var(--text);
+    }
+
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body::before, body::after {
+      content: "";
+      position: fixed;
+      width: 30rem;
+      height: 30rem;
+      border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.36;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before { background: rgba(255, 136, 181, 0.28); top: -10rem; left: -8rem; }
+    body::after { background: rgba(160, 108, 255, 0.18); right: -8rem; bottom: -10rem; }
+
+    .card-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      z-index: 1;
+    }
+
+    .birthday-text {
+      position: absolute;
+      text-align: center;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(30px) scale(0.8);
+      transition: all 1.1s cubic-bezier(0.17, 0.84, 0.44, 1);
+      user-select: none;
+      width: 90vw;
+      max-width: 600px;
+    }
+
+    .birthday-text.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .birthday-text .main-line {
+      display: block;
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      color: var(--pink-deep);
+      font-weight: 700;
+      font-family: Georgia, serif;
+    }
+
+    .birthday-text .name {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: clamp(3rem, 7vw, 6rem);
+      color: var(--purple);
+      text-shadow: 0 0 15px rgba(142, 92, 246, 0.4);
+      font-family: Georgia, serif;
+      animation: glowText 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowText {
+      from { text-shadow: 0 0 10px rgba(142, 92, 246, 0.3); }
+      to { text-shadow: 0 0 25px rgba(142, 92, 246, 0.7); }
+    }
+
+    .birthday-text .message {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      color: var(--muted);
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    .message-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.8s ease;
+    }
+
+    .birthday-text.show .line-1 { transition-delay: 0.8s; opacity: 1; transform: translateY(0); }
+    .birthday-text.show .line-2 { transition-delay: 2.0s; opacity: 1; transform: translateY(0); }
+    .birthday-text.show .line-3 { transition-delay: 3.2s; opacity: 1; transform: translateY(0); }
+    .birthday-text.show .line-4 { transition-delay: 4.2s; opacity: 1; transform: translateY(0); } /* تأخير ظهور القلب */
+
+    /* إعدادات القلب الداخلي الجديد */
+    .inner-heart-container {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .inner-heart {
+      width: 50px;
+      height: 50px;
+      filter: drop-shadow(0 8px 15px rgba(255, 79, 138, 0.5));
+      animation: innerBeat 1.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes innerBeat {
+      0% { transform: scale(1); filter: drop-shadow(0 5px 10px rgba(255, 79, 138, 0.4)); }
+      100% { transform: scale(1.15); filter: drop-shadow(0 15px 25px rgba(255, 79, 138, 0.7)); }
+    }
+
+    .pull-container {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 10;
+      transition: transform 0.3s ease-out, opacity 0.4s ease;
+      will-change: transform, opacity;
+      user-select: none;
+    }
+
+    .heart-wrapper {
+      width: clamp(110px, 17vw, 150px);
+      height: clamp(110px, 17vw, 150px);
+      filter: drop-shadow(0 18px 28px rgba(255, 92, 145, 0.28));
+      animation: pulseHeart 2.2s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseHeart {
+      0% { transform: scale(1); filter: drop-shadow(0 12px 20px rgba(255, 92, 145, 0.28)); }
+      100% { transform: scale(1.06); filter: drop-shadow(0 20px 34px rgba(255, 92, 145, 0.4)); }
+    }
+
+    .string {
+      width: 3px;
+      height: 88px;
+      background: linear-gradient(to bottom, #e95e92, #382d35);
+      border-radius: 999px;
+      margin-top: -10px;
+    }
+
+    .handle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: grab;
+      background: rgba(255,255,255,0.88);
+      border: 3px solid var(--purple);
+      box-shadow: 0 0 18px rgba(142, 92, 246, 0.28);
+      touch-action: none;
+      transition: transform 0.15s ease;
+    }
+
+    .handle:hover { transform: scale(1.08); }
+    .handle:active { cursor: grabbing; transform: scale(0.96); }
+    .handle:focus-visible { outline: 3px solid var(--pink); outline-offset: 4px; }
+
+    .instruction {
+      margin-top: 18px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.38);
+      border: 1px solid rgba(255,255,255,0.7);
+      backdrop-filter: blur(5px);
+      font-size: 0.74rem;
+      letter-spacing: 0.18rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-family: Georgia, serif;
+    }
+
+    .particle-heart, .particle-star { position: absolute; pointer-events: none; opacity: 0; z-index: 20; }
+    .particle-heart { width: 15px; height: 15px; background: #ff5296; transform: rotate(-45deg); border-radius: 3px; box-shadow: 0 0 20px rgba(255, 82, 150, 0.42); }
+    .particle-heart::before, .particle-heart::after { content: ""; position: absolute; width: 15px; height: 15px; background: inherit; border-radius: 50%; }
+    .particle-heart::before { top: -7.5px; left: 0; }
+    .particle-heart::after { top: 0; left: 7.5px; }
+    .particle-star { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.9); box-shadow: 0 0 16px rgba(255,255,255,0.8); }
+
+    @keyframes floatUp {
+      0% { opacity: 1; transform: translate3d(0, 0, 0) rotate(-45deg) scale(1); }
+      100% { opacity: 0; transform: translate3d(var(--tx), -115vh, 0) rotate(360deg) scale(0.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- تعريف ألوان القلب الـ 3D مرة واحدة عشان نستخدمه في أي مكان في الصفحة -->
+  <svg width="0" height="0" style="position:absolute;">
+    <defs>
+      <radialGradient id="heart3D" cx="30%" cy="25%" r="75%">
+        <stop offset="0%" stop-color="#fffafc" />
+        <stop offset="22%" stop-color="#ffd5e5" />
+        <stop offset="60%" stop-color="#ff4f8a" />
+        <stop offset="100%" stop-color="#9d1e55" />
+      </radialGradient>
+    </defs>
+  </svg>
+
+  <div class="card-container">
+    <div class="birthday-text" id="birthdayText">
+      <span class="main-line">Happy Birthday</span>
+      <span class="name">Nour</span>
+      
+      <span class="message" dir="rtl">
+        <span class="message-line line-1">بنوتي.. كل سنة وأنتِ طيبة يا أحلى وأجمل بنوتة في الدنيا كلها ❤️</span>
+        <span class="message-line line-2">ربنا يخليكي ليا وميحرمنيش منك أبداً أبداً يا أحلى نرنورة في الدنيا ❤️❤️</span>
+        <span class="message-line line-3">يا أجمل حاجة نورت حياتي، السنين اللي بتمر وأنتِ فيها بتزيد حلاوة..</span>
+        
+        <!-- القلب الداخلي الجديد اللي بيظهر في الآخر -->
+        <span class="message-line line-4 inner-heart-container">
+          <svg class="inner-heart" viewBox="0 0 100 100">
+            <path d="M50 85 C 50 85, 10 55, 10 30 C 10 15, 25 5, 40 15 C 46 19, 50 25, 50 25 C 50 25, 54 19, 60 15 C 75 5, 90 15, 90 30 C 90 55, 50 85, 50 85 Z" fill="url(#heart3D)"/>
+          </svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="pull-container" id="pullContainer">
+      <div class="heart-wrapper">
+        <svg viewBox="0 0 100 100" width="100%" height="100%">
+          <path d="M50 85 C 50 85, 10 55, 10 30 C 10 15, 25 5, 40 15 C 46 19, 50 25, 50 25 C 50 25, 54 19, 60 15 C 75 5, 90 15, 90 30 C 90 55, 50 85, 50 85 Z" fill="url(#heart3D)"/>
+        </svg>
+      </div>
+      <div class="string"></div>
+      <div class="handle" id="handle" tabindex="0"></div>
+      <div class="instruction" id="instruction">Pull me</div>
+    </div>
+  </div>
+
+  <script>
+    const pullContainer = document.getElementById('pullContainer');
+    const handle = document.getElementById('handle');
+    const birthdayText = document.getElementById('birthdayText');
+    const instruction = document.getElementById('instruction');
+
+    const maxPull = 150;
+    const triggerPull = 90;
+    let isDragging = false;
+    let startY = 0;
+    let currentY = 0;
+    let rAF = null;
+
+    const startDrag = (event) => {
+      isDragging = true;
+      startY = event.clientY;
+      pullContainer.style.transition = 'none';
+      instruction.style.opacity = '0';
+      handle.setPointerCapture(event.pointerId);
+      window.addEventListener('pointermove', onDrag);
+      window.addEventListener('pointerup', stopDrag);
+      window.addEventListener('pointercancel', stopDrag);
+    };
+
+    const updatePosition = () => { pullContainer.style.transform = `translateY(${currentY}px)`; };
+
+    const onDrag = (event) => {
+      if (!isDragging) return;
+      const diffY = event.clientY - startY;
+      if (diffY <= 0 || diffY > maxPull) return;
+      currentY = diffY;
+      if (rAF) cancelAnimationFrame(rAF);
+      rAF = requestAnimationFrame(updatePosition);
+    };
+
+    const stopDrag = (event) => {
+      if (!isDragging) return;
+      isDragging = false;
+      window.removeEventListener('pointermove', onDrag);
+      window.removeEventListener('pointerup', stopDrag);
+      window.removeEventListener('pointercancel', stopDrag);
+      
+      if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
+      if (rAF) cancelAnimationFrame(rAF);
+
+      pullContainer.style.transition = 'transform 0.7s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.5s';
+
+      if (currentY >= triggerPull) {
+        pullContainer.style.transform = 'translateY(-150vh) scale(0.6)';
+        pullContainer.style.opacity = '0';
+        setTimeout(() => {
+          birthdayText.classList.add('show');
+          createMagic();
+        }, 350);
+      } else {
+        pullContainer.style.transform = 'translateY(0)';
+        instruction.style.opacity = '1';
+      }
+      currentY = 0;
+    };
+
+    handle.addEventListener('pointerdown', startDrag);
+    
+    handle.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        pullContainer.style.transition = 'transform 0.7s cubic-bezier(0.17, 0.84, 0.44, 1), opacity 0.5s';
+        pullContainer.style.transform = 'translateY(-150vh) scale(0.6)';
+        pullContainer.style.opacity = '0';
+        setTimeout(() => {
+          birthdayText.classList.add('show');
+          createMagic();
+        }, 350);
+      }
+    });
+
+    function createMagic() {
+      const totalParticles = 80;
+      const fragment = document.createDocumentFragment(); 
+
+      for (let i = 0; i < totalParticles; i++) {
+        const particle = document.createElement('div');
+        const isStar = Math.random() > 0.5;
+        particle.classList.add(isStar ? 'particle-star' : 'particle-heart');
+
+        const left = Math.random() * 100;
+        const delay = Math.random() * 2;
+        const duration = 2.5 + Math.random() * 3;
+        const x = (Math.random() - 0.5) * 250;
+
+        particle.style.left = `${left}vw`;
+        particle.style.top = '105vh';
+        particle.style.setProperty('--tx', `${x}px`);
+        particle.style.animation = `floatUp ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}s forwards`;
+
+        if (!isStar) {
+          const colors = ['#ff5f93', '#ffb0cd', '#8e5ef6', '#ff4d6d'];
+          particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        fragment.appendChild(particle);
+        setTimeout(() => particle.remove(), (duration + delay) * 1000 + 150);
+      }
+      document.body.appendChild(fragment);
+    }
+  </script>
+</body>
+</html>
